@@ -1,16 +1,3 @@
-#provider "google" {
-  # credentials = file("<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY.json>")
-  # project     = "<YOUR_PROJECT_ID>"
-  # region      = "<YOUR_REGION>"
-  # export GOOGLE_APPLICATION_CREDENTIALS="<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY.json>"
-  # export GOOGLE_APPLICATION_CREDENTIALS=/mnt/gcp/gcp.json
-  # export GOOGLE_PROJECT=playground-s-11-47a8ae67
-  # make sure to enable gcp api
-  # gcloud config set project VALUE
-  # export CLOUDSDK_CORE_PROJECT=playground-s-11-47a8ae67
-  # gcloud services enable compute.googleapis.com
-#}
-
 resource "google_compute_network" "vpc_network" {
   name                    = "terraform-network"
   auto_create_subnetworks = false
