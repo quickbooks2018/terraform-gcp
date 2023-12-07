@@ -2,7 +2,7 @@ module "vpc" {
   source  = "terraform-google-modules/network/google"
   version = "~> 8.1"
 
-  project_id   = "playground-s-11-d1ce4ef2"
+  project_id   = "playground-s-11-7666c625"
   network_name = "terraform-vpc"
   routing_mode = "GLOBAL"
 

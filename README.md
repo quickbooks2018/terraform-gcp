@@ -10,14 +10,14 @@ gcloud auth activate-service-account --key-file=<PATH_TO_YOUR_SERVICE_ACCOUNT_KE
 - Bucket creation with gsutil
 ```commandline
 gsutil mb --project PROJECTID gs://<YOUR_BUCKET_NAME>/
-gsutil mb -p playground-s-11-d1ce4ef2 gs://cloudgeeks-terraform-1/
+gsutil mb -p playground-s-11-7666c625 gs://cloudgeeks-terraform-1/
 ```
 
 - Gcp List buckets
 ```commandline
 export GOOGLE_APPLICATION_CREDENTIALS="<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY.json>"
 export GOOGLE_APPLICATION_CREDENTIALS=/mnt/gcp/gcp.json
-export PROJECT_ID=playground-s-11-d1ce4ef2
+export PROJECT_ID=playground-s-11-7666c625
 gsutil ls -p playground-s-11-d1ce4ef2
 ```
 
