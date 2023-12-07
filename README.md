@@ -10,7 +10,15 @@ gcloud auth activate-service-account --key-file=<PATH_TO_YOUR_SERVICE_ACCOUNT_KE
 - Bucket creation with gsutil
 ```commandline
 gsutil mb --project PROJECTID gs://<YOUR_BUCKET_NAME>/
-gsutil mb -p playground-s-11-30224f85 gs://cloudgeeks-terraform/
+gsutil mb -p playground-s-11-d1ce4ef2 gs://cloudgeeks-terraform-1/
+```
+
+- Gcp List buckets
+```commandline
+export GOOGLE_APPLICATION_CREDENTIALS="<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY.json>"
+export GOOGLE_APPLICATION_CREDENTIALS=/mnt/gcp/gcp.json
+export PROJECT_ID=playground-s-11-d1ce4ef2
+gsutil ls -p playground-s-11-d1ce4ef2
 ```
 
 - Enable versioning for the bucket
@@ -32,3 +40,5 @@ gcloud config set project VALUE
 export CLOUDSDK_CORE_PROJECT=playground-s-11-47a8ae67
 gcloud services enable compute.googleapis.com
 ```
+
+- vpc regional and global mode https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network
