@@ -1,5 +1,14 @@
 # https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/latest
 # google_client_config and kubernetes provider must be explicitly specified like the following.
+
+data "terraform_remote_state" "vpc" {
+  backend = "gcs"
+    config = {
+        bucket = "cloudgeeks-terraform-2"
+        prefix = "terraform/state/vpc"
+    }
+}
+
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
@@ -10,11 +19,11 @@ provider "kubernetes" {
 
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
-  project_id                 = "playground-s-11-68366419"
+  project_id                 = "playground-s-11-cfea71b2"
   name                       = "gke"
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-c"]
-  network                    = "terraform-network"
+  network                    = data.terraform_remote_state.vpc.outputs.vpc_network
   subnetwork                 = "private-subnet-1"
   ip_range_pods              = ""
   ip_range_services          = ""
