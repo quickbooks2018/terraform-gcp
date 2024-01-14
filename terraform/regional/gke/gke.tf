@@ -9,6 +9,14 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
+data "terraform_remote_state" "private_subnet_1" {
+  backend = "gcs"
+    config = {
+        bucket = "cloudgeeks-terraform-2"
+        prefix = "terraform/state/vpc"
+    }
+}
+
 data "google_client_config" "default" {}
 
 provider "kubernetes" {
@@ -24,7 +32,7 @@ module "gke" {
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-c"]
   network                    = data.terraform_remote_state.vpc.outputs.vpc_network
-  subnetwork                 = "private-subnet-1"
+  subnetwork                 = data.terraform_remote_state.private_subnet_1.outputs.google_compute_subnetwork_private_subnet_1
   ip_range_pods              = ""
   ip_range_services          = ""
   http_load_balancing        = false
