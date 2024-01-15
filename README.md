@@ -60,3 +60,30 @@ gcloud services enable containerregistry.googleapis.com --project=project-id
 gcloud services enable servicenetworking.googleapis.com --project=project-id
 gcloud services enable cloudresourcemanager.googleapis.com --project=project-id
 ```
+
+- Gcloud Cli to create a custom network
+```commandline
+gcloud compute networks create <NETWORK_NAME> --subnet-mode=custom
+gcloud compute networks subnets create <SUBNET_NAME> --network=<NETWORK_NAME> --range=<CIDR_RANGE> --region=<REGION>
+gcloud compute firewall-rules create <FIREWALL_RULE_NAME> --network=<NETWORK_NAME> --allow=<PROTOCOL>:<PORT_RANGE> --source-ranges=<CIDR_RANGE>
+```
+
+- Gcloud Cli to create a custom network sample and two subnets located in different regions
+```commandline
+gcloud compute networks create mynetwork --subnet-mode=custom
+gcloud compute networks subnets create mynetwork-us --network=mynetwork --range=10.10.0.0/16 --region=us-east1
+gcloud compute networks subnets create mynetwork-eu --network=mynetwork --range=10.20.0.0/16 --region=europe-west1
+gcloud compute firewall-rules create mynetwork-allow-icmp --network=mynetwork --allow=icmp
+gcloud compute firewall-rules create mynetwork-allow-internal --network=mynetwork --allow=udp:53,tcp:53,icmp
+gcloud compute firewall-rules create mynetwork-allow-rdp --network=mynetwork --allow=tcp:3389
+gcloud compute firewall-rules create mynetwork-allow-ssh --network=mynetwork --allow=tcp:22
+```
+
+- Create a VM instance with gcloud cli in zone us-east1-b
+```commandline
+gcloud compute instances create myinstance --zone=us-east1-b --machine-type=n2-standard-2 --subnet=mynetwork-us
+```
+- Create a VM instance with gcloud cli in zone europe-west1-b
+```commandline
+gcloud compute instances create myinstance --zone=europe-west1-b --machine-type=n2-standard-2 --subnet=mynetwork-eu
+```
