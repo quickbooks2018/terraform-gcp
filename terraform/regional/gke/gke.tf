@@ -29,6 +29,7 @@ module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "playground-s-11-cfea71b2"
   name                       = "gke"
+  regional                   = true
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-c"]
   network                    = data.terraform_remote_state.vpc.outputs.vpc_network
