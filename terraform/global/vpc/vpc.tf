@@ -2,13 +2,13 @@ module "vpc" {
   source  = "terraform-google-modules/network/google"
   version = "~> 8.1"
 
-  project_id   = "playground-s-11-7666c625"
+  project_id   = "playground-s-11-26193514"
   network_name = "terraform-global-vpc"
   routing_mode = "GLOBAL"
 
   subnets = [
     {
-      subnet_name           = "public-subnet-01"
+      subnet_name           = "us-central1-public-subnet-01"
       subnet_ip             = "10.10.0.0/16"
       subnet_region         = "us-central1"
       subnet_private_access = "true"
@@ -16,7 +16,7 @@ module "vpc" {
       description           = "This subnet has a description"
     },
     {
-      subnet_name           = "public-subnet-02"
+      subnet_name           = "us-east1-public-subnet-02"
       subnet_ip             = "10.20.0.0/16"
       subnet_region         = "us-east1"
       subnet_private_access = "true"
@@ -24,7 +24,7 @@ module "vpc" {
       description           = "This subnet has a description"
     },
     {
-      subnet_name               = "public-subnet-03"
+      subnet_name               = "us-west1-public-subnet-03"
       subnet_ip                 = "10.30.0.0/16"
       subnet_region             = "us-west1"
       subnet_private_access     = "true"
@@ -34,7 +34,7 @@ module "vpc" {
       subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
     },
     {
-      subnet_name               = "private-subnet-01"
+      subnet_name               = "us-west1-private-subnet-01"
       subnet_ip                 = "10.50.0.0/16"
       subnet_region             = "us-west1"
       subnet_flow_logs          = "true"
@@ -45,7 +45,7 @@ module "vpc" {
       subnets_private_access    = "true"
     },
     {
-      subnet_name            = "private-subnet-02"
+      subnet_name            = "us-east1-private-subnet-02"
       subnet_ip              = "10.60.0.0/16"
       subnet_region          = "us-east1"
       subnet_private_access  = "true"
@@ -55,7 +55,7 @@ module "vpc" {
       subnets_private_access = "true"
     },
     {
-      subnet_name            = "private-subnet-03"
+      subnet_name            = "us-central1-private-subnet-03"
       subnet_ip              = "10.70.0.0/16"
       subnet_region          = "us-central1"
       subnet_region          = "us-central1"
@@ -72,7 +72,7 @@ module "vpc" {
     subnet-01 = [
       {
         range_name    = "subnet-01-secondary-01"
-        ip_cidr_range = "192.168.64.0/24"
+        ip_cidr_range = "192.168.0.0/16"
       },
     ]
 
@@ -81,7 +81,7 @@ module "vpc" {
 
   routes = [
     {
-      name              = "egress-internet"
+      name              = "egress-internet-traffic"
       description       = "route through IGW to access internet"
       destination_range = "0.0.0.0/0"
       tags              = "egress-inet"
