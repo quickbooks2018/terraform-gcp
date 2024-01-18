@@ -3,7 +3,7 @@ module "vpc" {
   version = "~> 8.1"
 
   project_id   = "playground-s-11-7666c625"
-  network_name = "terraform-vpc"
+  network_name = "terraform-global-vpc"
   routing_mode = "GLOBAL"
 
   subnets = [
