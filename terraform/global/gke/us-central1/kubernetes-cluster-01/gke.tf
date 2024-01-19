@@ -22,7 +22,7 @@ provider "kubernetes" {
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "playground-s-11-26193514"
-  name                       = "gke-us-central1"
+  name                       = "gke-us-central1-cluster-01"
   regional                   = true
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-c"]
