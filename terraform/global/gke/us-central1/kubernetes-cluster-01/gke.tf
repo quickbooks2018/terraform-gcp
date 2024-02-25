@@ -21,7 +21,7 @@ provider "kubernetes" {
 
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
-  project_id                 = "playground-s-11-26193514"
+  project_id                 = "playground-s-11-c10bbbc2"
   name                       = "gke-us-central1-cluster-01"
   regional                   = true
   region                     = "us-central1"
@@ -38,7 +38,27 @@ module "gke" {
 
   node_pools = [
     {
-      name                      = "default-node-pool"
+      name                      = "stateless-apps-node-pool"
+      machine_type              = "e2-medium"
+      node_locations            = "us-central1-a,us-central1-b,us-central1-c"
+      min_count                 = 1
+      max_count                 = 3
+      local_ssd_count           = 0
+      spot                      = true
+      disk_size_gb              = 100
+      disk_type                 = "pd-standard"
+      image_type                = "COS_CONTAINERD"
+      enable_gcfs               = false
+      enable_gvnic              = false
+      logging_variant           = "DEFAULT"
+      auto_repair               = true
+      auto_upgrade              = true
+      create_service_account    = true
+      preemptible               = false
+      initial_node_count        = 1
+    },
+    {
+      name                      = "stateful-apps-node-pool"
       machine_type              = "e2-medium"
       node_locations            = "us-central1-a,us-central1-b,us-central1-c"
       min_count                 = 1
@@ -54,9 +74,9 @@ module "gke" {
       auto_repair               = true
       auto_upgrade              = true
       create_service_account    = true
-      preemptible               = true
+      preemptible               = false
       initial_node_count        = 1
-    },
+    }
   ]
 
   node_pools_oauth_scopes = {
@@ -69,36 +89,56 @@ module "gke" {
   node_pools_labels = {
     all = {}
 
-    default-node-pool = {
-      default-node-pool = true
+    stateless-apps-node-pool = {
+      stateless-apps-node-pool = true
+      stateless = "true"
+    },
+    stateful-apps-node-pool = {
+      stateful-apps-node-pool = true
+      stateful = "true"
     }
+
   }
 
   node_pools_metadata = {
     all = {}
 
-    default-node-pool = {
-      node-pool-metadata-custom-value = "my-node-pool"
+    stateless-apps-node-pool = {
+      stateless-apps-node-pool = "true"
+    },
+    stateful-apps-node-pool = {
+      stateful-apps-node-pool = "true"
     }
   }
 
   node_pools_taints = {
     all = []
 
-    default-node-pool = [
+    stateless-apps-node-pool = [
       {
-        key    = "default-node-pool"
+        key    = "stateless-apps-node-pool"
         value  = true
         effect = "PREFER_NO_SCHEDULE"
       },
+    ],
+    stateful-apps-node-pool = [
+      {
+        key    = "stateful-apps-node-pool"
+        value  = true
+        effect = "PREFER_NO_SCHEDULE"
+        },
     ]
+
   }
 
   node_pools_tags = {
     all = []
 
-    default-node-pool = [
-      "default-node-pool",
+    stateless-apps-node-pool = [
+      "stateless-apps-node-pool",
+    ],
+    stateful-apps-node-pool = [
+      "stateful-apps-node-pool",
     ]
   }
 }
