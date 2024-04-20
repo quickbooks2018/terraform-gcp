@@ -10,6 +10,10 @@ gcloud auth activate-service-account --key-file=<PATH_TO_YOUR_SERVICE_ACCOUNT_KE
 - Bucket creation with gsutil
 ```commandline
 gsutil mb --project PROJECTID gs://<YOUR_BUCKET_NAME>/
+gcloud config set project playground-s-11-7666c625
+gsutil mb gs://cloudgeeks-terraform-1/
+
+
 gsutil mb -p playground-s-11-7666c625 gs://cloudgeeks-terraform-1/
 ```
 
@@ -36,7 +40,10 @@ export GOOGLE_APPLICATION_CREDENTIALS="<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY.json>"
 export GOOGLE_APPLICATION_CREDENTIALS=/mnt/gcp/gcp.json
 export GOOGLE_PROJECT=playground-s-11-47a8ae67
 make sure to enable gcp api
+
 gcloud config set project VALUE
+gcloud config set project playground-s-11-7666c625
+
 export CLOUDSDK_CORE_PROJECT=playground-s-11-47a8ae67
 gcloud services enable compute.googleapis.com
 ```
