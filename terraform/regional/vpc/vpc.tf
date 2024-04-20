@@ -1,5 +1,5 @@
 resource "google_compute_network" "vpc_network" {
-  name                    = "terraform-network"
+  name                    = "terraform-regional-vpc"
   auto_create_subnetworks = false
   routing_mode            = "REGIONAL"
 }
