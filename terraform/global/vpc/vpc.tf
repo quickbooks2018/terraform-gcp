@@ -2,31 +2,31 @@ module "vpc" {
   source  = "terraform-google-modules/network/google"
   version = "~> 8.1"
 
-  project_id   = "playground-s-11-c10bbbc2"
-  network_name = "terraform-global-vpc"
+  project_id   = var.project_id
+  network_name = var.vpc_name
   routing_mode = "GLOBAL"
 
   subnets = [
     {
-      subnet_name           = "us-central1-public-subnet-01"
-      subnet_ip             = "10.10.0.0/16"
-      subnet_region         = "us-central1"
+      subnet_name           = "${var.public_subnet_name}-01"
+      subnet_ip             = var.public_subnet_1_cidr
+      subnet_region         = var.public_subnet_1_region
       subnet_private_access = "true"
       subnet_flow_logs      = "true"
-      description           = "This subnet has a description"
+      description           = "${var.public_subnet_name}-01"
     },
     {
-      subnet_name           = "us-east1-public-subnet-02"
-      subnet_ip             = "10.20.0.0/16"
-      subnet_region         = "us-east1"
+      subnet_name           = "${var.public_subnet_name}-02"
+      subnet_ip             = var.public_subnet_2_cidr
+      subnet_region         = var.public_subnet_2_region
       subnet_private_access = "true"
       subnet_flow_logs      = "true"
-      description           = "This subnet has a description"
+      description           = "${var.public_subnet_name}-02"
     },
     {
-      subnet_name               = "us-west1-public-subnet-03"
-      subnet_ip                 = "10.30.0.0/16"
-      subnet_region             = "us-west1"
+      subnet_name               = "${var.public_subnet_name}-03"
+      subnet_ip                 = var.public_subnet_3_cidr
+      subnet_region             = var.public_subnet_3_region
       subnet_private_access     = "true"
       subnet_flow_logs          = "true"
       subnet_flow_logs_interval = "INTERVAL_10_MIN"
@@ -34,9 +34,9 @@ module "vpc" {
       subnet_flow_logs_metadata = "INCLUDE_ALL_METADATA"
     },
     {
-      subnet_name               = "us-west1-private-subnet-01"
-      subnet_ip                 = "10.50.0.0/16"
-      subnet_region             = "us-west1"
+      subnet_name               = "${var.private_subnet_name}-01"
+      subnet_ip                 = var.private_subnet_1_cidr
+      subnet_region             = var.private_subnet_1_region
       subnet_flow_logs          = "true"
       subnet_flow_logs_interval = "INTERVAL_10_MIN"
       subnet_flow_logs_sampling = 0.7
@@ -45,9 +45,9 @@ module "vpc" {
       subnets_private_access    = "true"
     },
     {
-      subnet_name            = "us-east1-private-subnet-02"
-      subnet_ip              = "10.60.0.0/16"
-      subnet_region          = "us-east1"
+      subnet_name            = "${var.private_subnet_name}-02"
+      subnet_ip              = var.private_subnet_2_cidr
+      subnet_region          = var.private_subnet_2_region
       subnet_private_access  = "true"
       subnet_flow_logs       = "true"
       description            = "This subnet has a description"
@@ -55,10 +55,9 @@ module "vpc" {
       subnets_private_access = "true"
     },
     {
-      subnet_name            = "us-central1-private-subnet-03"
-      subnet_ip              = "10.70.0.0/16"
-      subnet_region          = "us-central1"
-      subnet_region          = "us-central1"
+      subnet_name            = "${var.private_subnet_name}-03"
+      subnet_ip              = var.private_subnet_3_cidr
+      subnet_region          = var.private_subnet_3_region
       subnet_private_access  = "true"
       subnet_flow_logs       = "true"
       description            = "This subnet has a description"
@@ -71,7 +70,7 @@ module "vpc" {
   secondary_ranges = {
     subnet-01 = [
       {
-        range_name    = "subnet-01-secondary-01"
+        range_name    = "${var.public_subnet_name}-secondary-range-01"
         ip_cidr_range = "192.168.0.0/16"
       },
     ]

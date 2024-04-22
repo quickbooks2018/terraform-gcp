@@ -3,10 +3,10 @@
 
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
-    config = {
-        bucket = "cloudgeeks-terraform-4"
-        prefix = "terraform/state/global/vpc"
-    }
+  config = {
+    bucket = "cloudgeeks-terraform-4"
+    prefix = "terraform/state/global/vpc"
+  }
 }
 
 
@@ -38,44 +38,44 @@ module "gke" {
 
   node_pools = [
     {
-      name                      = "stateless-apps-node-pool"
-      machine_type              = "e2-medium"
-      node_locations            = "us-central1-a,us-central1-b,us-central1-c"
-      min_count                 = 1
-      max_count                 = 3
-      local_ssd_count           = 0
-      spot                      = true
-      disk_size_gb              = 100
-      disk_type                 = "pd-standard"
-      image_type                = "COS_CONTAINERD"
-      enable_gcfs               = false
-      enable_gvnic              = false
-      logging_variant           = "DEFAULT"
-      auto_repair               = true
-      auto_upgrade              = true
-      create_service_account    = true
-      preemptible               = false
-      initial_node_count        = 1
+      name                   = "stateless-apps-node-pool"
+      machine_type           = "e2-medium"
+      node_locations         = "us-central1-a,us-central1-b,us-central1-c"
+      min_count              = 1
+      max_count              = 3
+      local_ssd_count        = 0
+      spot                   = true
+      disk_size_gb           = 100
+      disk_type              = "pd-standard"
+      image_type             = "COS_CONTAINERD"
+      enable_gcfs            = false
+      enable_gvnic           = false
+      logging_variant        = "DEFAULT"
+      auto_repair            = true
+      auto_upgrade           = true
+      create_service_account = true
+      preemptible            = false
+      initial_node_count     = 1
     },
     {
-      name                      = "stateful-apps-node-pool"
-      machine_type              = "e2-medium"
-      node_locations            = "us-central1-a,us-central1-b,us-central1-c"
-      min_count                 = 1
-      max_count                 = 3
-      local_ssd_count           = 0
-      spot                      = false
-      disk_size_gb              = 100
-      disk_type                 = "pd-standard"
-      image_type                = "COS_CONTAINERD"
-      enable_gcfs               = false
-      enable_gvnic              = false
-      logging_variant           = "DEFAULT"
-      auto_repair               = true
-      auto_upgrade              = true
-      create_service_account    = true
-      preemptible               = false
-      initial_node_count        = 1
+      name                   = "stateful-apps-node-pool"
+      machine_type           = "e2-medium"
+      node_locations         = "us-central1-a,us-central1-b,us-central1-c"
+      min_count              = 1
+      max_count              = 3
+      local_ssd_count        = 0
+      spot                   = false
+      disk_size_gb           = 100
+      disk_type              = "pd-standard"
+      image_type             = "COS_CONTAINERD"
+      enable_gcfs            = false
+      enable_gvnic           = false
+      logging_variant        = "DEFAULT"
+      auto_repair            = true
+      auto_upgrade           = true
+      create_service_account = true
+      preemptible            = false
+      initial_node_count     = 1
     }
   ]
 
@@ -91,11 +91,11 @@ module "gke" {
 
     stateless-apps-node-pool = {
       stateless-apps-node-pool = true
-      stateless = "true"
+      stateless                = "true"
     },
     stateful-apps-node-pool = {
       stateful-apps-node-pool = true
-      stateful = "true"
+      stateful                = "true"
     }
 
   }
@@ -126,7 +126,7 @@ module "gke" {
         key    = "stateful-apps-node-pool"
         value  = true
         effect = "PREFER_NO_SCHEDULE"
-        },
+      },
     ]
 
   }

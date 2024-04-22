@@ -3,18 +3,18 @@
 
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
-    config = {
-        bucket = "cloudgeeks-terraform-2"
-        prefix = "terraform/state/vpc"
-    }
+  config = {
+    bucket = "cloudgeeks-terraform-2"
+    prefix = "terraform/state/vpc"
+  }
 }
 
 data "terraform_remote_state" "private_subnet_1" {
   backend = "gcs"
-    config = {
-        bucket = "cloudgeeks-terraform-2"
-        prefix = "terraform/state/vpc"
-    }
+  config = {
+    bucket = "cloudgeeks-terraform-2"
+    prefix = "terraform/state/vpc"
+  }
 }
 
 data "google_client_config" "default" {}
@@ -44,24 +44,24 @@ module "gke" {
 
   node_pools = [
     {
-      name                      = "default-node-pool"
-      machine_type              = "e2-medium"
-      node_locations            = "us-central1-a,us-central1-b,us-central1-c"
-      min_count                 = 1
-      max_count                 = 3
-      local_ssd_count           = 0
-      spot                      = false
-      disk_size_gb              = 100
-      disk_type                 = "pd-standard"
-      image_type                = "COS_CONTAINERD"
-      enable_gcfs               = false
-      enable_gvnic              = false
-      logging_variant           = "DEFAULT"
-      auto_repair               = true
-      auto_upgrade              = true
-      create_service_account    = true
-      preemptible               = true
-      initial_node_count        = 1
+      name                   = "default-node-pool"
+      machine_type           = "e2-medium"
+      node_locations         = "us-central1-a,us-central1-b,us-central1-c"
+      min_count              = 1
+      max_count              = 3
+      local_ssd_count        = 0
+      spot                   = false
+      disk_size_gb           = 100
+      disk_type              = "pd-standard"
+      image_type             = "COS_CONTAINERD"
+      enable_gcfs            = false
+      enable_gvnic           = false
+      logging_variant        = "DEFAULT"
+      auto_repair            = true
+      auto_upgrade           = true
+      create_service_account = true
+      preemptible            = true
+      initial_node_count     = 1
     },
   ]
 
