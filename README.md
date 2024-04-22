@@ -94,3 +94,10 @@ gcloud compute instances create myinstance --zone=us-east1-b --machine-type=n2-s
 ```commandline
 gcloud compute instances create myinstance --zone=europe-west1-b --machine-type=n2-standard-2 --subnet=mynetwork-eu
 ```
+
+### tfvars file
+```commandline
+terraform plan -var-file="variables.tfvars" -out=tfplan
+terraform show tfplan
+terraform apply -var-file="variables.tfvars"
+```

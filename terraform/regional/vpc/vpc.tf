@@ -6,60 +6,60 @@ resource "google_compute_network" "vpc_network" {
 
 # Define public subnets
 resource "google_compute_subnetwork" "public_subnet_1" {
-  name          = "public-subnet-1"
-  region        = "us-central1"
+  name          = "${var.public_subnet_name}-1"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "10.10.0.0/16"
+  ip_cidr_range = var.public_subnet_cidr_1
 }
 
 resource "google_compute_subnetwork" "public_subnet_2" {
-  name          = "public-subnet-2"
-  region        = "us-central1"
+  name          = "${var.public_subnet_name}-2"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "10.11.0.0/16"
+  ip_cidr_range = var.public_subnet_cidr_2
 }
 
 resource "google_compute_subnetwork" "public_subnet_3" {
-  name          = "public-subnet-3"
-  region        = "us-central1"
+  name          = "${var.public_subnet_name}-3"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "10.12.0.0/16"
+  ip_cidr_range = var.public_subnet_cidr_3
 }
 
 # Define private subnets
 resource "google_compute_subnetwork" "private_subnet_1" {
-  name          = "private-subnet-1"
-  region        = "us-central1"
+  name          = "${var.private_subnet_name}-1"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "20.20.0.0/16"
+  ip_cidr_range = var.private_subnet_cidr_1
 }
 
 resource "google_compute_subnetwork" "private_subnet_2" {
-  name          = "private-subnet-2"
-  region        = "us-central1"
+  name          = "${var.private_subnet_name}-2"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "20.21.0.0/16"
+  ip_cidr_range = var.private_subnet_cidr_2
 }
 
 resource "google_compute_subnetwork" "private_subnet_3" {
-  name          = "private-subnet-3"
-  region        = "us-central1"
+  name          = "${var.private_subnet_name}-3"
+  region        = var.region
   network       = google_compute_network.vpc_network.name
-  ip_cidr_range = "20.22.0.0/16"
+  ip_cidr_range = var.private_subnet_cidr_3
 }
 
 # Cloud Router for NAT
 resource "google_compute_router" "router" {
-  name    = "nat-router"
-  region  = "us-central1"
+  name    = var.nat_router_name
+  region  = var.region
   network = google_compute_network.vpc_network.name
 }
 
 # Cloud NAT for private subnets
 resource "google_compute_router_nat" "nat" {
-  name                               = "nat-gateway"
+  name                               = "${var.nat_router_name}-gateway"
   router                             = google_compute_router.router.name
-  region                             = "us-central1"
+  region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
 

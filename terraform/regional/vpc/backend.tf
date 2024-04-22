@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "cloudgeeks-terraform-3"
+    bucket = "cloudgeeks-terraform"
     prefix = "terraform/state/vpc"
   }
 }
