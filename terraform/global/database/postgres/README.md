@@ -32,7 +32,7 @@ gcloud compute networks peerings list --network=terraform-global-vpc --project=p
 create a firewall rule to allow ssh from google web console
 allow this ip range from google web console
 35.235.240.0/20
-````
+```
 
 - Terraform Plan and Apply
 ```shell
