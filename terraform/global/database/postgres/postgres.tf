@@ -13,7 +13,8 @@ module "postgresql" {
   edition           = var.edition
   tier              = var.tier
 
-  deletion_protection = true
+  deletion_protection         = true
+  deletion_protection_enabled = true
 
   backup_configuration = {
     enabled                        = true
