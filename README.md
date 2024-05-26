@@ -50,6 +50,16 @@ gcloud services enable compute.googleapis.com
 
 - vpc regional and global mode https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network
 
+- GKE Enale Required APIS
+```bash
+gcloud services enable container.googleapis.com
+gcloud services enable compute.googleapis.com
+gcloud services enable cloudresourcemanager.googleapis.com
+gcloud services enable iam.googleapis.com
+gcloud services enable monitoring.googleapis.com
+gcloud services enable logging.googleapis.com
+```
+
 - GCP Enable APIs
 ```commandline
 gcloud services enable compute.googleapis.com --project=project-id
