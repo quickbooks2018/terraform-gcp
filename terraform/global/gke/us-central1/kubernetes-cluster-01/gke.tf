@@ -21,6 +21,7 @@ provider "kubernetes" {
 
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
+  version                    = "30.3.0"
   project_id                 = "playground-s-11-c10bbbc2"
   name                       = "gke-us-central1-cluster-01"
   regional                   = true
