@@ -27,7 +27,7 @@ module "gke" {
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-c"]
   network                    = data.terraform_remote_state.vpc.outputs.vpc.network.network.name
-  subnetwork                 = "us-central1-private-subnet-03"
+  subnetwork                 = "private-subnet-01"
   ip_range_pods              = ""
   ip_range_services          = ""
   http_load_balancing        = false
