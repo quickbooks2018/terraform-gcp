@@ -4,7 +4,7 @@
 data "terraform_remote_state" "vpc" {
   backend = "gcs"
   config = {
-    bucket = "cloudgeeks-terraform-4"
+    bucket = "cloudgeeks-terraform"
     prefix = "terraform/state/global/vpc"
   }
 }
