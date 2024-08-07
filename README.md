@@ -692,7 +692,7 @@ function create_gke_cluster() {
             --cluster="${CLUSTER_NAME}" \
             --zone="${ZONE}" \
             --machine-type=e2-medium \
-            --num-nodes=3 \
+            --num-nodes=1 \
             --node-labels="environment=${ENVIRONMENT},app=main" \
             --scopes=https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring \
             --tags="${node_pool_name}" \
