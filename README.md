@@ -1056,7 +1056,7 @@ function create_gke_cluster() {
             --network="${VPC_NAME}" \
             --subnetwork="${PRIVATE_SUBNET_NAME}-01" \
             --enable-ip-alias \
-            --num-nodes=3 \
+            --num-nodes=4 \
             --machine-type=e2-medium \
             --disk-size=10 \
             --enable-autorepair \
