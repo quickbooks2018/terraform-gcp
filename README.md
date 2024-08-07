@@ -902,12 +902,12 @@ main
 log "Infrastructure deletion complete."
 ```
 
-- gke acloudguru sandbox (private hosted zone)
+- gke acloudguru sandbox (without hosted zone)
 ```bash
 #!/bin/bash
 
 # Script: GCP Infrastructure Setup
-# Description: Sets up GCP infrastructure including VPC, subnets, GKE cluster, and private DNS
+# Description: Sets up GCP infrastructure including VPC, subnets, GKE cluster
 
 set -euo pipefail
 
@@ -917,10 +917,7 @@ REGION="us-central1"
 ZONE="${REGION}-a"
 VPC_NAME="global-vpc"
 CLUSTER_NAME="gke-cluster"
-DNS_NAME="test-infra.com."
-ZONE_NAME="private-permisson-io-zone"
 ENVIRONMENT="production"
-SETUP_DNS=true  # Set this to false if you don't want to set up DNS
 
 # Public subnets
 PUBLIC_SUBNET_NAME="public-subnet"
@@ -962,7 +959,6 @@ function enable_apis() {
         "monitoring.googleapis.com"
         "logging.googleapis.com"
         "containerregistry.googleapis.com"
-        "dns.googleapis.com"
     )
 
     for api in "${apis[@]}"; do
@@ -1062,7 +1058,7 @@ function create_gke_cluster() {
             --enable-ip-alias \
             --num-nodes=3 \
             --machine-type=e2-medium \
-            --disk-size=50 \
+            --disk-size=10 \
             --enable-autorepair \
             --enable-autoupgrade \
             --quiet
@@ -1078,7 +1074,7 @@ function create_gke_cluster() {
             --cluster="${CLUSTER_NAME}" \
             --zone="${ZONE}" \
             --machine-type=e2-medium \
-            --num-nodes=1 \
+            --num-nodes=3 \
             --node-labels="environment=${ENVIRONMENT},app=main" \
             --scopes=https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring \
             --tags="${node_pool_name}" \
@@ -1092,52 +1088,12 @@ function create_gke_cluster() {
     fi
 }
 
-function setup_dns() {
-    if [ "${SETUP_DNS}" = true ]; then
-        log "Setting up private DNS zone..."
-        if ! gcloud dns managed-zones describe "${ZONE_NAME}" &>/dev/null; then
-            gcloud dns managed-zones create "${ZONE_NAME}" \
-                --dns-name="${DNS_NAME}" \
-                --description="Private DNS zone for ${DNS_NAME}" \
-                --visibility=private \
-                --networks="${VPC_NAME}"
-            log "Created private DNS zone ${ZONE_NAME}"
-        else
-            log "DNS zone ${ZONE_NAME} already exists"
-        fi
-
-        log "Creating static IP address..."
-        if ! gcloud compute addresses describe api-static-ip --region="${REGION}" &>/dev/null; then
-            gcloud compute addresses create api-static-ip \
-                --project="${PROJECT_ID}" \
-                --region="${REGION}" \
-                --description="Static IP address for ${ENVIRONMENT} environment" \
-                --quiet
-            log "Created static IP address api-static-ip"
-        else
-            log "Static IP address api-static-ip already exists"
-        fi
-
-        # Create an A record for your service
-        STATIC_IP=$(gcloud compute addresses describe api-static-ip --region="${REGION}" --format='get(address)')
-        gcloud dns record-sets create "${DNS_NAME}" \
-            --zone="${ZONE_NAME}" \
-            --type=A \
-            --ttl=300 \
-            --rrdatas="${STATIC_IP}"
-        log "Created A record for ${DNS_NAME} pointing to ${STATIC_IP}"
-    else
-        log "DNS setup skipped. Set SETUP_DNS=true in the script to enable DNS setup."
-    fi
-}
-
 function main() {
     check_prerequisites
     enable_apis
     create_vpc
     create_nat_gateways
     create_gke_cluster
-    setup_dns
 }
 
 # Error handling and cleanup
